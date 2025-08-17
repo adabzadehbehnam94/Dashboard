@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import Topbar from "../components/topbar";
+import Sidebar from "../components/sidebar";
 
 
 export const metadata: Metadata = {
@@ -13,8 +14,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" dir="rtl">
+      <body >
+        <Topbar/>
         {children}
       </body>
     </html>
