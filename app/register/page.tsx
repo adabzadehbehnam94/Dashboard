@@ -1,3 +1,4 @@
+"use client"
 import { registerAction } from "@/components/serverAction"
 import { useActionState } from "react"
 
@@ -6,12 +7,21 @@ export default function Register() {
     return (
         <div className="mx-auto">
             
-            <form action="">
+            <form action={formRegister}>
                 <input type="text" name="name" />
+                <p>{state?.nameErr}</p>
                 <input type="text" name="family" />
+                <p>{state?.familyErr}</p>
                 <input type="text" name="email" />
+                <p>{state?.emailErr}</p>
+
                 <input type="password" name="password" />
-                <button type="button">ثبت نام</button>
+                <p>{state?.passwordErr}</p>
+
+                <button type="submit">ثبت نام</button>
+                <br/>
+                <p>{state?.success}</p>
+                <p>{state?.error}</p>
             </form>
           
         </div>

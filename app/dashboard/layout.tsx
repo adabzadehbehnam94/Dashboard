@@ -14,11 +14,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" dir="rtl">
-      <body >
-        <Topbar/>
-        {children}
-      </body>
-    </html>
+    <>
+      <Topbar />
+      {children}
+    </>
   );
 }

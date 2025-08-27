@@ -13,7 +13,7 @@ interface State{
 }
 
 interface Formdata {
-    get : (item : string)=> string
+    get : (item : string)=> any
 }
 
 export async function registerAction(state : State , formdata  : Formdata): Promise<any> {
@@ -23,16 +23,24 @@ export async function registerAction(state : State , formdata  : Formdata): Prom
     const password = formdata.get("password")
 
     if (name === ""){
-        return "فیلد نام اجباریست"
+        return {
+            nameErr : "فیلد نام اجباریست"
+        }
     }
     if (family === ""){
-        return "فیلد نام خانوادگی اجباریست"
+        return {
+            familyErr : "فیلد نام خانوادگی اجباریست"
+        }
     }
     if (email === ""){
-        return "فیلد ایمیل اجباریست"
+        return {
+            emailErr : "فیلد ایمیل اجباریست"
+        }
     }
     if (password === ""){
-        return "فیلد رمز عبور اجباریست"
+        return {
+            passwordErr :"فیلد رمز عبور اجباریست"
+        }
     }
 
     const data = await fetch("http://localhost:3001/users",{
