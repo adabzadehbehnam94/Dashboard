@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import Overview from "../../public/images/icons/analysis.png"
-import Users from "../../public/images/icons/team.png"
-import Products from "../../public/images/icons/products.png"
-import Setting from "../../public/images/icons/settings.png"
-import Orders from "../../public/images/icons/order.png"
+import Overview from "../public/images/icons/analysis.png"
+import Users from "../public/images/icons/team.png"
+import Products from "../public/images/icons/products.png"
+import Setting from "../public/images/icons/settings.png"
+import Orders from "../public/images/icons/order.png"
 
 export default function Sidebar(){
     return(

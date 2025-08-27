@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Topbar from "../components/topbar";
-import Sidebar from "../components/sidebar";
+import Topbar from "../../components/topbar";
+import Sidebar from "../../components/sidebar";
 
 
 export const metadata: Metadata = {

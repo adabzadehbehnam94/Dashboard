@@ -1,4 +1,4 @@
-import Sidebar from "@/app/components/sidebar";
+import Sidebar from "@/components/sidebar";
 
 export default function Orders(){
     return(
