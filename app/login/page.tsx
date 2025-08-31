@@ -1,19 +1,37 @@
 "use client"
 
+import { login } from "@/components/serverAction"
 import { useRouter } from "next/navigation"
+import { useActionState, useEffect } from "react"
 
 export default function Login(){
+  const [state , formlogin] = useActionState(login , {})
   const router = useRouter()
+  // useEffect(()=>{
+  //   if(state?.success){
+  //     router.push("/")
+  //   }
+  // },[state])
   return(
     <div className="mx-auto w-200">
-      <form className="flex flex-col" action="">
-        <label htmlFor="name">نام :</label>
-        <input className="border-1 border-black rounded-xl" type="text" name="name"  />
-        <input type="text" name="email" />
-        <input type="password" name="password" />
+      <form className="flex flex-col" action={formlogin}>
+        <label >ایمیل :</label>
+        <input className="border-1 border-black rounded-xl" type="text" name="email"  />
+        <p>{state?.emailErr}</p>
         <br/>
-        <button type="button">ورود</button>
+        <label >رمز عبور :</label>
+        <input className="border-1 border-black rounded-xl" type="password" name="password" />
+        <p>{state?.passwordErr}</p>
+        <br/>
+        <button type="submit">ورود</button>
+        <br/>
+        <p>{state?.logSuccess}</p>
+        <p>{state?.success}</p>
+        <p>{state?.logError}</p>
+        <p>{state?.error}</p>
+        
       </form>
+      
       <br/>
       <button onClick={()=> router.push("/register")}>ورود به صفحه ثبت نام</button>
     </div>
