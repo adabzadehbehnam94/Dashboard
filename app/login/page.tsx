@@ -1,17 +1,20 @@
 "use client"
 
+import ContextUser, { VAl } from "@/components/Contex"
 import { login } from "@/components/serverAction"
 import { useRouter } from "next/navigation"
-import { useActionState, useEffect } from "react"
+import { useActionState, useContext, useEffect } from "react"
 
 export default function Login(){
   const [state , formlogin] = useActionState(login , {})
   const router = useRouter()
-  // useEffect(()=>{
-  //   if(state?.success){
-  //     router.push("/")
-  //   }
-  // },[state])
+  const {handleUser} = useContext<VAl | any>(ContextUser)
+  useEffect(()=>{
+    if(state?.logSuccess){
+      router.push("/")
+      handleUser(state?.user)
+    }
+  },[state])
   return(
     <div className="mx-auto w-200">
       <form className="flex flex-col" action={formlogin}>
@@ -26,9 +29,9 @@ export default function Login(){
         <button type="submit">ورود</button>
         <br/>
         <p>{state?.logSuccess}</p>
-        <p>{state?.success}</p>
         <p>{state?.logError}</p>
         <p>{state?.error}</p>
+        <p>{state?.logPassword}</p>
         
       </form>
       

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import "../styles/globals.css"
 
+import Topbar from "@/components/topbar";
+import { Contex } from "@/components/Contex";
+
 
 export const metadata: Metadata = {
   title: "admin dashboard",
@@ -14,9 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" dir="rtl">
-      <body>
-        {children}
-      </body>
+      <Contex>
+        <body>
+          <Topbar />
+          {children}
+        </body>
+      </Contex>
     </html>
   );
 }

@@ -1,5 +1,7 @@
 "use server"
 
+import { cookies } from "next/headers"
+
 
 
 interface State {
@@ -89,23 +91,32 @@ export async function login(state: State, formdata: Formdata): Promise<any> {
         }
     }
 
-    const fetchdata = await fetch("http://localhost:3001/users",{
-        method : "GET",
-        headers : {"Accept" : "application/json"},
+    const fetchdata = await fetch("http://localhost:3001/users", {
+        method: "GET",
+        headers: { "Accept": "application/json" },
         cache: "no-store"
     })
     const data = await fetchdata.json()
-    
+    const cookie = await cookies()
     if (fetchdata.ok) {
-        
-        const matcher = data.find( (item : Data) => item.email === email)
-        if(matcher){
-            return {
-                logSuccess : `خوش آمدید ${matcher.name}`
+
+        const matcher = data.find((item: Data) => item.email === email)
+        if (matcher) {
+            cookie.set("name" , matcher.name)
+            if (matcher.password === password) {
+                cookie.set("name" , matcher.name )
+                return {
+                    user : matcher.name,
+                    logSuccess: `خوش آمدید ${matcher.name}`
+                }
+            }else{
+                return{
+                    logPassword : "رمز عبور اشتباه است"
+                }
             }
-        }else{
+        } else {
             return {
-                logError : "ایمیل نامعتبر است"
+                logError: "ایمیل نامعتبر است"
             }
         }
 
@@ -115,3 +126,22 @@ export async function login(state: State, formdata: Formdata): Promise<any> {
         }
     }
 }
+
+export const presentUser = async () : Promise<{user ?: any  , cookieError? : string}> =>{
+            const cookie = await cookies()
+            const result = cookie.get("name")
+            if(result){
+               return {
+                user : result.value
+               }
+            }else{
+                return {
+                    cookieError : "لطفا وارد شوید یا ثبت نام کنید"
+                }
+            }
+        }
+
+export const logoutUser = async ()  =>{
+            const cookie = await cookies()
+            cookie.delete("name")
+        }        
