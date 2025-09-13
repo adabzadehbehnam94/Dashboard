@@ -8,7 +8,7 @@ import Orders from "../public/images/icons/order.png"
 
 export default function Sidebar(){
     return(
-        <section className="flex flex-col w-50 mr-20">
+        <section className="flex flex-col w-50">
             <Link className="flex mb-5 tex-left" href={"/dashboard/orders"}><Image className="ml-3" src={Orders} alt="icon" width={20} height={20}/>سفارش ها</Link>
             <Link className="flex mb-5" href={"/dashboard/overview"}><Image className="ml-3" src={Overview} alt="icon" width={20} height={20}/>نمای کلی</Link>
             <Link className="flex mb-5" href={"/dashboard/products"}><Image className="ml-3" src={Products} alt="icon" width={20} height={20}/>محصولات</Link>

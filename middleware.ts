@@ -5,7 +5,6 @@ export function middleware(request: {
     url: string,
     cookies: any,
     get: string
-
 }) {
     const cookie = request.cookies.get("name")
 
@@ -15,5 +14,5 @@ export function middleware(request: {
 }
 
 export const config = {
-    matcher: '/dashboard'
+    matcher: '/dashboard/:path*'
 }

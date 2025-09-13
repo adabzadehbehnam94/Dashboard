@@ -11,14 +11,14 @@ export default function Topbar() {
     return (
         <>
             {user ? (
-                <header className="bg-blue-500 px-20 h-20  flex  text-white items-center">
+                <header className="bg-blue-500 px-20 h-20  flex  text-white items-center mb-5">
                     <div className="flex h-10">
-                        <Link className="ml-10" href={"/dashboard"}>{user}</Link>
+                        <Link className="ml-10" href={"/dashboard/overview"}>{user}</Link>
                         <button type="button" onClick={logout}>خروج</button>
                     </div>
                 </header>
             ) : (
-                <header className="bg-blue-500 px-20 h-20  flex  text-white items-center">
+                <header className="bg-blue-500 px-20 h-20  flex  text-white items-center mb-5">
                     <div className="flex h-10">
                         <Link className="ml-10" href={"/login"}>ورود</Link>
                         <Link href={"/register"}>ثبت نام</Link>

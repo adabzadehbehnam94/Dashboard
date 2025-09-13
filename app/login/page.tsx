@@ -11,7 +11,7 @@ export default function Login(){
   const {handleUser} = useContext<VAl | any>(ContextUser)
   useEffect(()=>{
     if(state?.logSuccess){
-      router.push("/")
+      router.push("/dashboard/overview")
       handleUser(state?.user)
     }
   },[state])

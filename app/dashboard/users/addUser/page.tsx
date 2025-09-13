@@ -2,14 +2,15 @@
 import { registerAction } from "@/components/serverAction"
 import { useActionState, useEffect, useState } from "react"
 
-export default function Register() {
+export default function AddUser() {
     const [state, formRegister] = useActionState(registerAction, {})
-    const [date , setdate] = useState<any | string>('')
+     const [date , setdate] = useState<any | string>('')
     useEffect(()=>{
         const date = new Date()
         const curent = date.getMonth()
         setdate(curent)
     },[])
+    
     return (
         <div className="mx-auto">
 
