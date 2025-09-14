@@ -41,6 +41,7 @@ export async function registerAction(state: State, formdata: Formdata): Promise<
     const email = formdata.get("email")
     const password = formdata.get("password")
     const date = formdata.get("date")
+    const category = formdata.get("category")
 
     if (name === "") {
         return {
@@ -73,7 +74,8 @@ export async function registerAction(state: State, formdata: Formdata): Promise<
             name: name,
             family: family,
             email: email,
-            password: password
+            password: password,
+            category : category
         })
     })
     const result = await data.json()
@@ -106,7 +108,7 @@ export async function login(state: State, formdata: Formdata): Promise<any> {
 
     const fetchdata = await fetch("http://localhost:3001/users", {
         method: "GET",
-        headers: { "Accept": "application/json" },
+        headers: { "content-type": "application/json" },
         cache: "no-store"
     })
     const data = await fetchdata.json()
@@ -115,11 +117,12 @@ export async function login(state: State, formdata: Formdata): Promise<any> {
 
         const matcher = data.find((item: Data) => item.email === email)
         if (matcher) {
-            cookie.set("user", matcher)
+            
             if (matcher.password === password) {
                 cookie.set("name", matcher.name)
+                cookie.set("user", matcher.category)
                 return {
-                    user: matcher.name,
+                    user : matcher.name,
                     logSuccess: `خوش آمدید ${matcher.name}`
                 }
             } else {
@@ -140,12 +143,15 @@ export async function login(state: State, formdata: Formdata): Promise<any> {
     }
 }
 
-export const presentUser = async (): Promise<{ user?: any, cookieError?: string }> => {
+export const presentUser = async (): Promise<{ user?: string, category?: any, cookieError? : string}> => {
     const cookie = await cookies()
-    const result = cookie.get("name")
-    if (result) {
+    const name = cookie.get("name")
+    const category = cookie.get("user")
+    
+    if (name && category) {
         return {
-            user: result.value
+            user: name.value,
+            category: category.value
         }
     } else {
         return {
@@ -157,6 +163,7 @@ export const presentUser = async (): Promise<{ user?: any, cookieError?: string 
 export const logoutUser = async () => {
     const cookie = await cookies()
     cookie.delete("name")
+    cookie.delete("user")
 }
 
 
@@ -244,6 +251,7 @@ export async function editUser(state: State, formdata: Formdata):Promise<any> {
     const password = formdata.get("password")
     const date = formdata.get("date")
     const id = formdata.get("id")
+    const category = formdata.get("category")
 
     if (name === "") {
         return {
@@ -273,7 +281,8 @@ export async function editUser(state: State, formdata: Formdata):Promise<any> {
             family : family,
             email : email ,
             password : password,
-            date : date
+            date : date,
+            category : category
         })
     })
 

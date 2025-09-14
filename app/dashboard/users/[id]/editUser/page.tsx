@@ -5,10 +5,24 @@ import { editUser } from "@/components/serverAction"
 import { useParams } from "next/navigation"
 import { useRouter } from "next/navigation"
 
+interface User {
+    name : string,
+    family : string,
+    email : string,
+    password : string | number,
+    id : string | number,
+    category : Category
+}
+
+enum Category {
+    normal= "mormal",
+    admin = "admin"
+}
+
 export default function EditUser(){
    const [state , EditForm] = useActionState(editUser , {})
    const params = useParams()
-   const [user , setuser] = useState<{name : string , family :string , email : string ,password : string | number , id : string | number} | null>(null)
+   const [user , setuser] = useState< User | null>(null)
    const [date , setdate] = useState<any | string>('')
    const router = useRouter()
    useEffect(()=>{
@@ -26,21 +40,27 @@ export default function EditUser(){
         <div>
 
             <form action={EditForm}>
-                <input value={date} type="hidden" name="date" />
+                <input defaultValue={date} type="hidden" name="date" />
                 <br/>
-                <input value={user?.id} type="hidden" name="id" />
+                <input defaultValue={user?.id} type="hidden" name="id" />
                 <br/>
                 <label htmlFor="">نام : </label>
-                <input type="text" placeholder={user?.name} name="name" />
+                <input type="text" defaultValue={user?.name} name="name" />
                 <br/>
                 <label htmlFor="">نام خانوادگی : </label>
-                <input type="text" placeholder={user?.family} name="family" />
+                <input type="text" defaultValue={user?.family} name="family" />
                 <br/>
                 <label htmlFor="">ایمیل : </label>
-                <input type="text" placeholder={user?.email} name="email" />
+                <input type="text" defaultValue={user?.email} name="email" />
+                <br/>
+                <label htmlFor="">نوع کاربر : </label>
+                <select name="category" id="1">
+                    <option value="normal" key="1">عادی</option>
+                    <option value="admin" key="2">ادمین</option>
+                </select>
                 <br/>
                 <label htmlFor="">رمز عبور : </label>
-                <input type="password"  name="password" />
+                <input defaultValue={user?.password} type="password"  name="password" />
                 <br/>
 
                 <button onClick={()=> router.push("/dashboard/users")} className="cursor-pointer">ثبت ویرایش</button>

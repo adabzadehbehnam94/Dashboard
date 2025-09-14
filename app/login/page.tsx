@@ -8,10 +8,10 @@ import { useActionState, useContext, useEffect } from "react"
 export default function Login(){
   const [state , formlogin] = useActionState(login , {})
   const router = useRouter()
-  const {handleUser} = useContext<VAl | any>(ContextUser)
+  const {handleUser , category} = useContext<VAl | any>(ContextUser)
   useEffect(()=>{
-    if(state?.logSuccess){
-      router.push("/dashboard/overview")
+    if( state?.logSuccess){
+      router.push("/")
       handleUser(state?.user)
     }
   },[state])

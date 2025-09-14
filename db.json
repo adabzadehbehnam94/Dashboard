@@ -35,7 +35,8 @@
       "name": "بهنام",
       "family": "ادب زاده",
       "email": "behnam@gmail.com",
-      "password": "123456"
+      "password": "123456",
+      "category": "admin"
     },
     {
       "id": "3033",
@@ -43,23 +44,35 @@
       "name": "محسن",
       "family": "احمدی",
       "email": "mohsen@gmail.com",
-      "password": "123456"
+      "password": "123456",
+      "category": "normal"
     },
     {
+      "name": "رضا",
+      "family": "محمدی",
+      "email": "reza@gmail.com",
+      "password": "123456",
+      "date": "8",
+      "id": "825b",
+      "category": "normal"
+    },
+    {
+      "name": "علی",
+      "family": "امینی",
+      "email": "ali@gmail.com",
+      "password": "123456",
+      "date": "8",
+      "category": "admin",
+      "id": "5a31"
+    },
+    {
+      "id": "381b",
+      "date": "8",
       "name": "امین",
       "family": "لشگری",
       "email": "amin@gmail.com",
       "password": "123456",
-      "date": "8",
-      "id": "825b"
-    },
-    {
-      "name": "علی",
-      "family": "محمدی",
-      "email": "ali@gmail.com",
-      "password": "123456",
-      "date": "8",
-      "id": "5a31"
+      "category": "normal"
     }
   ]
 }

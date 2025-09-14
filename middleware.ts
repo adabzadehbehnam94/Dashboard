@@ -7,9 +7,12 @@ export function middleware(request: {
     get: string
 }) {
     const cookie = request.cookies.get("name")
+    const category = request.cookies.get("user")
 
     if (!cookie) {
         return NextResponse.redirect(new URL("/login", request.url))
+    }else if (category.value === "normal") {
+        return NextResponse.redirect(new URL("/profile", request.url))
     }
 }
 

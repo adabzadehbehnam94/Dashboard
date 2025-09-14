@@ -14,8 +14,8 @@ export default function Register() {
         <div className="mx-auto">
 
             <form action={formRegister}>
-                <input value={date} type="hidden" name="date" />
-                <br/>
+                <input defaultValue={date} type="hidden" name="date" />
+                <input type="hidden" name="category" defaultValue={"normal"} />
                 <label>نام : </label>
                 <input type="text" name="name" />
                 <p>{state?.nameErr}</p>

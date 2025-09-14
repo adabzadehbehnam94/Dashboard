@@ -10,14 +10,16 @@ interface Child {
 export interface VAl  {
     user : {user : string} | null,
     handleUser : (item : {user : string})=> void,
-    logout : ()=> void
-    Remove : (id : {id : string})=> void
+    logout : ()=> void,
+    Remove : (id : {id : string})=> void,
+    category : {category : string} | null
 }
 
 const ContextUser = createContext<VAl | null>(null)
 
 export function Contex({children} : Child){
-    const [user , setuser] = useState<{user : string} | null >(null)
+    const [user , setuser] = useState<any | null >(null)
+    const [category , setCategory] = useState<{category : string} | null >(null)
     const router =useRouter()
     const handleUser = (item : {user : string}) =>{
         setuser(item)
@@ -32,13 +34,14 @@ export function Contex({children} : Child){
         const me = async ()=>{
             const cookie = await presentUser()
             if(cookie){    
-                setuser(cookie?.user)
+                setuser(cookie.user)
+                setCategory(cookie.category)
             }
         }
 
         me()
 
-    },[])
+    },[user])
 
     const Remove = (id : {id : string}) =>{
         removeUser(id)
@@ -46,7 +49,7 @@ export function Contex({children} : Child){
     }
 
     return(
-        <ContextUser.Provider value={{user , handleUser ,logout , Remove}}>
+        <ContextUser.Provider value={{user , handleUser ,logout , Remove , category}}>
             {children}
         </ContextUser.Provider>
     )
