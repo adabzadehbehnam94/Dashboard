@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import localFont from 'next/font/local'
 import "../styles/globals.css"
-
 import Topbar from "@/components/topbar";
 import { Contex } from "@/components/Contex";
+import { Redux } from "@/components/Redux";
 
 
 
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 const IranSans = localFont({
-  src : "../public/fonts/IRANSansWeb.woff2"
+  src: "../public/fonts/IRANSansWeb.woff2"
 })
 
 
@@ -24,12 +24,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fa" dir="rtl" className={IranSans.className}>
-      <Contex>
-        <body>
-          <Topbar />
-          {children}
-        </body>
-      </Contex>
+      <Redux>
+        <Contex>
+          <body>
+            <Topbar />
+            {children}
+          </body>
+        </Contex>
+      </Redux>
     </html>
   );
 }
