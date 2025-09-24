@@ -27,6 +27,8 @@ export default function Topbar() {
                     <div className="flex h-10">
                         <Link className="ml-10" href={"/login"}>ورود</Link>
                         <Link href={"/register"}>ثبت نام</Link>
+                        <Link href={"/card"}>سبد خرید</Link>
+                        <p>{selector.count}</p>
                     </div>
                 </header>
             )}

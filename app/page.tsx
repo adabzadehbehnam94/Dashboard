@@ -22,7 +22,7 @@ export default function Home() {
         <div key={item.id}>
           <p>{item.producName}</p>
           <p>{item.price}</p>
-          <button className="cursor-pointer" onClick={()=> dispatch(add({name : item.producName , price : item.price , id : item.id}))}>اضافه کردن به سبد خرید</button>
+          <button className="cursor-pointer" onClick={()=> {dispatch(add({name : item.producName , price : item.price , id : item.id}))}}>اضافه کردن به سبد خرید</button>
         </div>
       ))}
     </div>

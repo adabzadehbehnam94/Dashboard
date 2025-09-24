@@ -28,8 +28,8 @@ export const ShopingCard = createSlice({
                     })
                     return sum
                 }
-                
-                state.total = Sum()
+
+                state.total = Sum().toLocaleString("fa-IR")
         }
 
     }

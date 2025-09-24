@@ -30,22 +30,34 @@
   ],
   "users": [
     {
-      "id": "037a",
-      "date": "6",
       "name": "بهنام",
       "family": "ادب زاده",
       "email": "behnam@gmail.com",
       "password": "123456",
-      "category": "admin"
+      "date": "6",
+      "category": "admin",
+      "id": "037a",
+      "orders": [
+        {
+          "name": "هدفون بلوتوثی بیتس مدل Powerbeats Pro 2",
+          "price": "260000000",
+          "id": "970c"
+        },
+        {
+          "name": "ایسوس tuf gaming f15",
+          "price": "1500000000",
+          "id": "a23f"
+        }
+      ]
     },
     {
-      "id": "3033",
-      "date": "7",
       "name": "محسن",
       "family": "احمدی",
       "email": "mohsen@gmail.com",
       "password": "123456",
-      "category": "normal"
+      "date": "8",
+      "category": "admin",
+      "id": "3033"
     },
     {
       "name": "رضا",

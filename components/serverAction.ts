@@ -4,7 +4,6 @@ import { cookies } from "next/headers"
 import { productsType } from "./Products"
 
 
-
 interface State {
     name?: string,
     family?: string,
@@ -120,7 +119,19 @@ export async function login(state: State, formdata: Formdata): Promise<any> {
             
             if (matcher.password === password) {
                 cookie.set("name", matcher.name)
-                cookie.set("user", matcher.category)
+                cookie.set("category", matcher.category)
+                cookie.set({
+                    name : "user",
+                    value : matcher.id,
+                    httpOnly : true
+                })
+
+                // const test : any = cookie.get("user")?.value
+                // console.log(test?.id);
+
+                
+                
+                
                 return {
                     user : matcher.name,
                     logSuccess: `خوش آمدید ${matcher.name}`
@@ -143,15 +154,18 @@ export async function login(state: State, formdata: Formdata): Promise<any> {
     }
 }
 
-export const presentUser = async (): Promise<{ user?: string, category?: any, cookieError? : string}> => {
+export const presentUser = async (): Promise<{ user?: string, category?: any, cookieError? : string, id? : string}> => {
     const cookie = await cookies()
     const name = cookie.get("name")
-    const category = cookie.get("user")
+    const category = cookie.get("category")
+    const user : any = cookie.get("user")
+    
     
     if (name && category) {
         return {
             user: name.value,
-            category: category.value
+            category: category.value,
+            id : user.value
         }
     } else {
         return {
@@ -164,6 +178,7 @@ export const logoutUser = async () => {
     const cookie = await cookies()
     cookie.delete("name")
     cookie.delete("user")
+    cookie.delete("category")
 }
 
 
@@ -287,9 +302,7 @@ export async function editUser(state: State, formdata: Formdata):Promise<any> {
     })
 
      const result = await data.json()
-     console.log(result);
      
-
      if(data.ok){
         return {
             editSuccess : "تغییرات با موفقیت اعمال شد"
@@ -300,4 +313,35 @@ export async function editUser(state: State, formdata: Formdata):Promise<any> {
         }
      }
 }
+
+
+export async function buyProduct(id : {id : string},products : any) {
+    const oldOrders = await fetch(`http://localhost:3001/users/${id}`,{
+        method : "GET",
+        cache : "no-store"
+    })
+
+    const oldData = await oldOrders.json()
+    
+    const fetchdata = await fetch(`http://localhost:3001/users/${id}`,{
+        method : "PATCH",
+        cache : "no-store",
+        body : JSON.stringify({
+            orders : [...oldData.orders , ...products]
+        })
+    })
+
+
+    if(fetchdata.ok){
+        return {
+            buySuccess : "سفارش شما با موفقیت ثبت شد"
+        }
+    }else{
+        return{
+            buyError : "خرید شما ثبت نشد"
+        }
+    }
+}
+
+
 
