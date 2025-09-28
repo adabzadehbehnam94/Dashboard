@@ -2,7 +2,7 @@
 export interface productsType {
     id : string ,
     producName : string,
-    price? : number,
+    price : string,
     // image? : any,
     category? : string 
 }

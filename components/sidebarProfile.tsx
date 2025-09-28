@@ -12,6 +12,6 @@ export default function SidebarProfile() {
     return (
         <section className="flex flex-col w-50">
             <Link className="flex mb-5 tex-left" href={"/profile/orders"}><Image className="ml-3" src={Orders} alt="icon" width={20} height={20} />سفارش ها</Link>
-            <Link className="flex mb-5" href={"/dashboard/setting"}><Image className="ml-3" src={Setting} alt="icon" width={20} height={20} />تنضیمات</Link>
+            <Link className="flex mb-5" href={"/profile/setting"}><Image className="ml-3" src={Setting} alt="icon" width={20} height={20} />تنضیمات</Link>
         </section>)
 }

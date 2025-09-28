@@ -26,6 +26,18 @@
       "category": "لوازم جانبی",
       "price": "260000000",
       "id": "970c"
+    },
+    {
+      "producName": "هدفون بلوتوثی بیتس مدل Powerbeats Pro 1",
+      "category": "لوازم جانبی",
+      "price": "150000000",
+      "id": "972m"
+    },
+    {
+      "producName": "هدفون بلوتوثی بیتس مدل Powerbeats Pro 7",
+      "category": "لوازم جانبی",
+      "price": "350000000",
+      "id": "976b"
     }
   ],
   "users": [
@@ -47,6 +59,16 @@
           "name": "ایسوس tuf gaming f15",
           "price": "1500000000",
           "id": "a23f"
+        },
+        {
+          "name": "ایسوس tuf gaming f15",
+          "price": "1500000000",
+          "id": "a23f"
+        },
+        {
+          "name": "سامسونگ galaxy s25 ultra",
+          "price": "800000000",
+          "id": "969c"
         }
       ]
     },
