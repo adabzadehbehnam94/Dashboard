@@ -4,7 +4,8 @@ export interface productsType {
     producName : string,
     price : string,
     // image? : any,
-    category? : string 
+    category? : string,
+    detail ? : string
 }
 
 export async function FetchProducts() {

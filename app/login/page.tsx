@@ -17,7 +17,7 @@ export default function Login(){
   },[state])
   return(
     <div className="mx-auto w-200">
-      <form className="flex flex-col" action={formlogin}>
+      <form className="flex  flex-col" action={formlogin}>
         <label >ایمیل :</label>
         <input className="border-1 border-black rounded-xl" type="text" name="email"  />
         <p>{state?.emailErr}</p>
@@ -26,7 +26,7 @@ export default function Login(){
         <input className="border-1 border-black rounded-xl" type="password" name="password" />
         <p>{state?.passwordErr}</p>
         <br/>
-        <button type="submit">ورود</button>
+        <button className="cursor-pointer bg-blue-500 px-2 text-white rounded-xl w-20 justify-center" type="submit">ورود</button>
         <br/>
         <p>{state?.logSuccess}</p>
         <p>{state?.logError}</p>
