@@ -1,11 +1,13 @@
 "use client"
 
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import ContextUser from "./Contex"
 import { VAl } from "./Contex"
 import Link from "next/link"
 import { useSelector } from "react-redux"
 import cart from "@/public/images/icons/icons8-shopping-cart-48.png"
+import menu from "@/public/images/icons/icons8-hamburger-menu-48.png"
+import close from "@/public/images/icons/icons8-close-button-32.png"
 import Image from "next/image"
 
 
@@ -13,30 +15,65 @@ import Image from "next/image"
 export default function Topbar() {
     const { user, logout, category } = useContext<VAl | any>(ContextUser)
     const selector = useSelector((state: { card: any }) => state.card)
+    const [menuMobile, setmenuMobile] = useState(menu)
+    const [open, setopen] = useState(false)
+    const mobile = () => {
+        setmenuMobile(menuMobile === menu ? close : menu)
+        setopen(!open)
+    }
+    const logOut =()=>{
+        logout()
+        setmenuMobile(menu)
+        setopen(false)
+    }
+
+    const Out =()=>{
+        setmenuMobile(menu)
+        setopen(false)
+    }
     return (
         <>
             {user ? (
-                <header className="bg-blue-500 px-20 h-20  flex  text-white items-center mb-5">
-                    <div className="flex h-10">
-                        <Link className="ml-10" href={category === "admin" ? "/dashboard/overview" : "/profile"}>{user}</Link>
-                        <button type="button" className="cursor-pointer ml-10" onClick={logout}>خروج</button>
-                        <div className="relative">
-                            <Link href={"/card"}><Image alt="card" src={cart} width={30} height={30} /></Link>
-                            {selector.count > 0 && <p className="absolute -bottom-1  -left-2 bg-red-500 rounded-2xl px-2 text-xs">{selector.count.toLocaleString("fa-IR")}</p>}
+                <>
+                    <header className="bg-blue-500 px-10 md:px-20 h-20  flex  text-white items-center">
+                        <div className="flex h-10 items-center">
+                            <button onClick={mobile} className="sm:hidden ml-10  "><Image alt="menu" width={30} height={30} src={menuMobile} /></button>
+                            <Link className="ml-10 hidden sm:flex" href={category === "admin" ? "/dashboard/overview" : "/profile"}>{user}</Link>
+                            <button type="button" className="cursor-pointer ml-10 hidden sm:flex" onClick={logout}>خروج</button>
+                            <div className="relative">
+                                <Link href={"/card"}><Image alt="card" src={cart} width={30} height={30} /></Link>
+                                {selector.count > 0 && <p className="absolute -bottom-1  -left-2 bg-red-500 rounded-2xl px-2 text-sm">{selector.count.toLocaleString("fa-IR")}</p>}
+                            </div>
                         </div>
-                    </div>
-                </header>
+                    </header>
+                    {open &&
+                        <div className={`bg-blue-500 h-150 absolute ${open} right-0 top-20 w-40 pt-10`}>
+                            <Link onClick={Out} className="mr-10 mb-5 block text-white" href={category === "admin" ? "/dashboard/overview" : "/profile"}>{user}</Link>
+                            <button  type="button" className=" mr-10 mb-5 text-white block" onClick={logOut}>خروج</button>
+                        </div>
+                    }
+                </>
             ) : (
-                <header className="bg-blue-500 px-20 h-20  flex  text-white items-center mb-5">
-                    <div className="flex h-10">
-                        <Link className="ml-10" href={"/login"}>ورود</Link>
-                        <Link className="ml-10" href={"/register"}>ثبت نام</Link>
-                        <div className="relative">
-                            <Link href={"/card"}><Image alt="card" src={cart} width={30} height={30} /></Link>
-                            {selector.count > 0 && <p className="absolute -bottom-1  -left-2 bg-red-500 rounded-2xl px-2">{selector.count.toLocaleString("fa-IR")}</p>}
+                <>
+                    <header className="bg-blue-500 px-10 md:px-20 h-20  flex  text-white items-center">
+                        <div className="flex h-10 items-center">
+                            <button onClick={mobile} className="sm:hidden ml-10  "><Image alt="menu" width={30} height={30} src={menuMobile} /></button>
+                            <Link className="hidden sm:flex ml-10" href={"/login"}>ورود</Link>
+                            <Link className="hidden sm:flex ml-10" href={"/register"}>ثبت نام</Link>
+                            <div className="relative">
+                                <Link href={"/card"}><Image alt="card" src={cart} width={30} height={30} /></Link>
+                                {selector.count > 0 && <p className="absolute -bottom-1  -left-2 bg-red-500 rounded-2xl px-2 text-sm">{selector.count.toLocaleString("fa-IR")}</p>}
+                            </div>
                         </div>
-                    </div>
-                </header>
+                    </header>
+                    {open &&
+                        <div className={`bg-blue-500 h-150 absolute ${open} right-0 top-20 w-40 pt-10`}>
+                            <Link onClick={Out} className=" block mr-10 mb-5 text-white" href={"/login"}>ورود</Link>
+                            <Link onClick={Out} className="block mr-10 mb-5 text-white" href={"/register"}>ثبت نام</Link>
+                        </div>
+                    }
+                </>
+
             )}
         </>
     )

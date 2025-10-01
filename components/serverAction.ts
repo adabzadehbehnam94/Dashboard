@@ -13,13 +13,6 @@ interface State {
     error?: string | undefined
 }
 
-// interface EditUser {
-//     name? : string,
-//     family?: string,
-//     email?: string,
-//     password?: string,
-//     id : string | number
-// }
 
 interface Data {
     name: string,
