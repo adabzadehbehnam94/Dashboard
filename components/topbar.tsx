@@ -8,7 +8,11 @@ import { useSelector } from "react-redux"
 import cart from "@/public/images/icons/icons8-shopping-cart-48.png"
 import menu from "@/public/images/icons/icons8-hamburger-menu-48.png"
 import close from "@/public/images/icons/icons8-close-button-32.png"
+import User from "@/public/images/icons/icons8-user-40.png"
+import Exit from "@/public/images/icons/icons8-exit-sign-40.png"
 import Image from "next/image"
+import Sidebar from "./sidebar"
+import SidebarProfile from "./sidebarProfile"
 
 
 
@@ -35,9 +39,9 @@ export default function Topbar() {
         <>
             {user ? (
                 <>
-                    <header className="bg-blue-500 px-10 md:px-20 h-20  flex  text-white items-center">
+                    <header className="bg-blue-500 px-5 md:px-10 lg:px-20 h-20 flex text-white items-center">
                         <div className="flex h-10 items-center">
-                            <button onClick={mobile} className="sm:hidden ml-10  "><Image alt="menu" width={30} height={30} src={menuMobile} /></button>
+                            <button onClick={mobile} className="sm:hidden ml-10"><Image alt="menu" width={30} height={30} src={menuMobile} /></button>
                             <Link className="ml-10 hidden sm:flex" href={category === "admin" ? "/dashboard/overview" : "/profile"}>{user}</Link>
                             <button type="button" className="cursor-pointer ml-10 hidden sm:flex" onClick={logout}>خروج</button>
                             <div className="relative">
@@ -47,9 +51,10 @@ export default function Topbar() {
                         </div>
                     </header>
                     {open &&
-                        <div className={`bg-blue-500 h-150 absolute ${open} right-0 top-20 w-40 pt-10`}>
-                            <Link onClick={Out} className="mr-10 mb-5 block text-white" href={category === "admin" ? "/dashboard/overview" : "/profile"}>{user}</Link>
-                            <button  type="button" className=" mr-10 mb-5 text-white block" onClick={logOut}>خروج</button>
+                        <div className={`bg-blue-500 h-150 absolute ${open} right-0 top-20 w-50 pt-10 pr-5`}>
+                            <Link onClick={Out} className=" mb-5 block text-white flex flex-row" href={category === "admin" ? "/dashboard/overview" : "/profile"}><Image className="ml-5" src={User} alt="user" width={20} height={20}/>{user}</Link>
+                            {category === "admin" ? <Sidebar click={Out}/> : <SidebarProfile/>}
+                            <button  type="button" className=" mb-5 text-white flex flex-row" onClick={logOut}> <Image className="ml-5" src={Exit} alt="user" width={20} height={20}/>خروج</button>
                         </div>
                     }
                 </>

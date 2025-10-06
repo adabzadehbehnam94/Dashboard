@@ -13,26 +13,26 @@ export default function Register() {
     return (
         <div className="mx-auto">
 
-            <form action={formRegister}>
+            <form className="flex  flex-col mx-auto w-80 md:w-100 bg-white rounded-xl p-10" action={formRegister}>
                 <input defaultValue={date} type="hidden" name="date" />
                 <input type="hidden" name="category" defaultValue={"normal"} />
-                <label>نام : </label>
-                <input type="text" name="name" />
+                <label className="mb-1">نام : </label>
+                <input type="text" className="border-2 border-gray-300 rounded-xl px-3 py-2" name="name" />
                 <p>{state?.nameErr}</p>
                 <br />
-                <label>نام خانوادگی : </label>
-                <input type="text" name="family" />
+                <label className="mb-1">نام خانوادگی : </label>
+                <input className="border-2 border-gray-300 rounded-xl px-3 py-2" type="text" name="family" />
                 <p>{state?.familyErr}</p>
                 <br />
-                <label>ایمیل: </label>
-                <input type="text" name="email" />
+                <label className="mb-1">ایمیل: </label>
+                <input className="border-2 border-gray-300 rounded-xl px-3 py-2" type="text" name="email" />
                 <p>{state?.emailErr}</p>
                 <br />
-                <label>رمز عبور : </label>
-                <input type="password" name="password" />
+                <label className="mb-1">رمز عبور : </label>
+                <input className="border-2 border-gray-300 rounded-xl px-3 py-2" type="password" name="password" />
                 <p>{state?.passwordErr}</p>
                 <br/>
-                <button type="submit">ثبت نام</button>
+                <button className="cursor-pointer bg-blue-500 px-1 py-1 text-white rounded-xl w-20 justify-center" type="submit">ثبت نام</button>
                 <br />
                 <p>{state?.success}</p>
                 <p>{state?.error}</p>

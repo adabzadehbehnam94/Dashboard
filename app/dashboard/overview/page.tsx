@@ -23,25 +23,13 @@ export default  function Overview() {
     // const data  = [{name : "فروردین" , count : 5}, {name : "اردیبهشت" , count : 2},{name : "خرداد" , count : 10}]
 
     return (
-        <div className="grid grid-cols-4 gap-2">
-            <div className="col-span-1">
-                <Sidebar />
-            </div>
-            <div className="col-span-3">
-                <div className="grid grid-cols-3 gap-2">
-                    <div>
+        <div >
                         <p>تعداد کاربران : {user}</p>
                         {/* <LineChart width={300} height={200} data={data}>
                             <CartesianGrid />
                             <Line dataKey="count" />
                             
                         </LineChart> */}
-                    </div>
-                    <div></div>
-                    <div></div>
-                </div>
-            </div>
-
 
         </div>
     )

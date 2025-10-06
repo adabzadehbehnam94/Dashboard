@@ -26,45 +26,40 @@ export default function Users() {
         return word[0] === search || word2 === search || item.name === search
     })
     console.log(filter);
-    
+
 
     return (
-        <div className="grid grid-cols-4 gap-3">
-            <div className="col-span-1">
-                <Sidebar />
-                <Link className="flex mb-5" href={"/dashboard/users/addUser"}><Image  className="ml-3" src={Plus} width={20} height={20} alt="image"/>ایجاد کاربر جدید</Link>
-            </div>
-            <div className="col-span-3">
-                <div className="grid grid-cols-2">
-                    <div>
-                        <p>تعداد کاربران : {count}</p>
-                        <br />
-                        {search === "" ?
-                            users?.map((item: { id: string | number, name: string, family: string }) => (
-                                <Link href={`/dashboard/users/${item.id}`} className="flex flex-row mb-3" key={item.id}>
-                                    <div className="ml-2">{item.name}</div>
-                                    <div>{item.family}</div>
-                                </Link>
-                            ))
+        <div >
 
-                            :
-                            
-                            filter?.map((item: { id: string | number, name: string, family: string }) => (
-                                <div className="flex flex-row mb-3" key={item.id}>
-                                    <div className="ml-2">{item.name}</div>
-                                    <div>{item.family}</div>
-                                </div>
-                            ))
-                        }
+            <div className="grid sm:grid-cols-2">
+                <div className="order-last sm:order-first mb-5">
+                    <p className="text-blue-500">تعداد کاربران : {count}</p>
+                    <br />
+                    {search === "" ?
+                        users?.map((item: { id: string | number, name: string, family: string }) => (
+                            <Link href={`/dashboard/users/${item.id}`} className="flex flex-row mb-3 w-[fit-content]" key={item.id}>
+                                <div className="ml-2">{item.name}</div>
+                                <div>{item.family}</div>
+                            </Link>
+                        ))
 
-                    </div>
-                    <div>
-                        <label>جست و جو : </label>
-                        <input onChange={(item) => setsearch(item.target.value)} className="border-1 border-solid p-1" type="search" name="search" placeholder="نام کاربر" />
-                    </div>
+                        :
+
+                        filter?.map((item: { id: string | number, name: string, family: string }) => (
+                            <Link href={`/dashboard/users/${item.id}`} className="flex flex-row mb-3 w-[fit-content]" key={item.id}>
+                                <div className="ml-2">{item.name}</div>
+                                <div>{item.family}</div>
+                            </Link>
+                        ))
+                    }
+
                 </div>
-
+                <div className="order-first sm:order-last mb-5">
+                    <label>جست و جو : </label>
+                    <input onChange={(item) => setsearch(item.target.value)} className="border-2 border-gray-300 px-2 py-1 rounded-md" type="search" name="search" placeholder="نام کاربر" />
+                </div>
             </div>
+
         </div>
     )
 }

@@ -14,8 +14,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="mx-20">
-      {children}
+    <div className="mx-5 md:mx-10 lg:mx-20 mt-5 grid md:grid-cols-4 sm:grid-cols-3 sm:gap-3">
+      <div className="hidden sm:flex sm:col-span-1">
+        <Sidebar />
+      </div>
+      <div className="sm:col-span-2 md:col-span-3">
+        {children}
+      </div>
     </div>
   );
 }

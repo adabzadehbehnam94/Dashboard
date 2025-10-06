@@ -12,28 +12,27 @@ export default function AddUser() {
     },[])
     
     return (
-        <div className="mx-auto">
-
-            <form action={formRegister}>
-                <input value={date} type="hidden" name="date" />
-                <br/>
+        <div >
+            
+            <form className="flex flex-col w-70 mx-auto sm:mr-5" action={formRegister}>
+                <input defaultValue={date} type="hidden" name="date" />
                 <label>نام : </label>
-                <input type="text" name="name" />
+                <input className="border-2 border-gray-300 rounded-md px-2 py-1 my-2" type="text" name="name" />
                 <p>{state?.nameErr}</p>
                 <br />
                 <label>نام خانوادگی : </label>
-                <input type="text" name="family" />
+                <input className="border-2 border-gray-300 rounded-md px-2 py-1 my-2" type="text" name="family" />
                 <p>{state?.familyErr}</p>
                 <br />
                 <label>ایمیل: </label>
-                <input type="text" name="email" />
+                <input className="border-2 border-gray-300 rounded-md px-2 py-1 my-2" type="text" name="email" />
                 <p>{state?.emailErr}</p>
                 <br />
                 <label>رمز عبور : </label>
-                <input type="password" name="password" />
+                <input className="border-2 border-gray-300 rounded-md px-2 py-1 my-2" type="password" name="password" />
                 <p>{state?.passwordErr}</p>
                 <br/>
-                <button type="submit">ثبت نام</button>
+                <button className="bg-blue-500 rounded-lg px-2 py-1 text-white cursor-pointer w-20" type="submit">ثبت کاربر</button>
                 <br />
                 <p>{state?.success}</p>
                 <p>{state?.error}</p>
