@@ -39,7 +39,7 @@ export default function Topbar() {
         <>
             {user ? (
                 <>
-                    <header className="bg-blue-500 px-5 md:px-10 lg:px-20 h-20 flex text-white items-center">
+                    <header className="bg-blue-500 px-5 md:px-10 lg:px-20 h-20 flex text-white items-center mb-5">
                         <div className="flex h-10 items-center">
                             <button onClick={mobile} className="sm:hidden ml-10"><Image alt="menu" width={30} height={30} src={menuMobile} /></button>
                             <Link className="ml-10 hidden sm:flex" href={category === "admin" ? "/dashboard/overview" : "/profile"}>{user}</Link>
@@ -60,7 +60,7 @@ export default function Topbar() {
                 </>
             ) : (
                 <>
-                    <header className="bg-blue-500 px-10 md:px-20 h-20  flex  text-white items-center">
+                    <header className="bg-blue-500 px-10 md:px-20 h-20  flex  text-white items-center mb-5">
                         <div className="flex h-10 items-center">
                             <button onClick={mobile} className="sm:hidden ml-10  "><Image alt="menu" width={30} height={30} src={menuMobile} /></button>
                             <Link className="hidden sm:flex ml-10" href={"/login"}>ورود</Link>

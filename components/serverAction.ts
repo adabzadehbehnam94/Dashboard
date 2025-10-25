@@ -13,6 +13,13 @@ interface State {
     error?: string | undefined
 }
 
+interface StateProduct{
+    producName : string,
+    price : string,
+    detail : string,
+    id? : string
+}
+
 
 interface Data {
     name: string,
@@ -119,11 +126,6 @@ export async function login(state: State, formdata: Formdata): Promise<any> {
                     httpOnly : true
                 })
 
-                // const test : any = cookie.get("user")?.value
-                // console.log(test?.id);
-
-                
-                
                 
                 return {
                     user : matcher.name,
@@ -222,7 +224,7 @@ export async function productAction(state: productsType, formdata: Formdata): Pr
 
     })
     const result = await data.json()
-    // console.log(result);
+    
 
     if (data.ok) {
         return {
@@ -336,5 +338,55 @@ export async function buyProduct(id : {id : string},products : any) {
     }
 }
 
+export async function editProduct(state : StateProduct , formdara : Formdata):Promise<any> {
+    const producName = formdara.get("producName")
+    const price = formdara.get("price")
+    const detail = formdara.get("detail")
+    const id = formdara.get("id")
+    const category = formdara.get("category")
+
+    if (producName === "") {
+        return {
+            nameErr: "فیلد نام محصول نباید خالی باشد"
+        }
+    }
+    if (price === "") {
+        return {
+            familyErr: "فیلد قیمت نباید خالی باشد"
+        }
+    }
+    
+
+    const fetchData = await fetch(`http://localhost:3001/products/${id}`,{
+        method : "PUT",
+        cache : "no-store",
+        body : JSON.stringify({
+            producName : producName,
+            price : price,
+            detail : detail,
+            category : category,
+            id:id
+        })
+    })
+
+
+    if(fetchData.ok){
+        return{
+            success : "ویرایش با موفقیت انجام شد"
+        }
+    }else{
+        return {
+            error : "ویرایش انجام نشد"
+        }
+    }
+}
+
+export async function removeProduct(id : {id : string}) {
+    const fetchdata = await fetch(`http://localhost:3001/products/${id}`,{
+        method : "DELETE",
+        cache : "no-store"
+    })
+
+}
 
 

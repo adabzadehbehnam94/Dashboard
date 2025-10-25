@@ -1,5 +1,5 @@
 import { FetchProducts, productsType } from "@/components/Products";
-import Sidebar from "@/components/sidebar";
+import Link from "next/link";
 
 
 export default async function Products() {
@@ -14,27 +14,27 @@ export default async function Products() {
                     <div>
                         <p className="text-blue-500 mb-2">موبایل : </p>
                         {categoryMobile.map((item: productsType) => (
-                            <div className="mb-1" key={item.id}>
+                            <Link href = {`/dashboard/products/${item.id}`} className="mb-1" key={item.id}>
                                 <p>{item.producName}</p>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                     <div>
                         <p className="text-blue-500 mb-2">لپتاپ : </p>
                         {categoryLaptop.map((item: productsType) => (
-                            <div className="mb-1" key={item.id}>
+                            <Link href = {`/dashboard/products/${item.id}`} className="mb-1" key={item.id}>
                                 <p>{item.producName}</p>
 
-                            </div>
+                            </Link>
                         ))}
                     </div>
                     <div>
                         <p className="text-blue-500 mb-2">لوازم جانبی : </p>
                         {Accessories.map((item: productsType) => (
-                            <div className="mb-1" key={item.id}>
+                            <Link href = {`/dashboard/products/${item.id}`} className="mb-1" key={item.id}>
                                 <p>{item.producName}</p>
 
-                            </div>
+                            </Link>
                         ))}
                     </div>
 

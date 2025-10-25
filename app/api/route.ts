@@ -11,7 +11,7 @@ export async function POST(request : any){
     const body = await request.formData()
     
     
-    console.log(typeof(body));
+    
     
     // const data = await fetch("http://localhost:3001/products",{
     //     method : "POST",

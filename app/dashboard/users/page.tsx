@@ -25,7 +25,7 @@ export default function Users() {
         const word2 = word[0] + word[1]
         return word[0] === search || word2 === search || item.name === search
     })
-    console.log(filter);
+    
 
 
     return (

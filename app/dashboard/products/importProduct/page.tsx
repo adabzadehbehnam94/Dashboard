@@ -16,7 +16,7 @@ export default function ImportProduct() {
     return (
         <div >
 
-            <form className="w-70  mx-auto sm:mr-5" action={formProduct}>
+            <form className=" sm:mr-5" action={formProduct}>
                 <label >نام محصول :</label>
                 <input name="producName" className="border-2 border-gray-300 rounded-md px-2 py-1 mt-2 mb-2" type="text" />
                 <br />

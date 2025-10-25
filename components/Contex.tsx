@@ -1,6 +1,6 @@
 "use client"
 import { createContext, useEffect, useState } from "react"
-import { buyProduct, logoutUser, presentUser, removeUser } from "./serverAction"
+import { buyProduct, logoutUser, presentUser, removeProduct, removeUser } from "./serverAction"
 import { useRouter } from "next/navigation"
 
 
@@ -14,7 +14,9 @@ export interface VAl  {
     Remove : (id : {id : string})=> void,
     category : {category : string} | null,
     id : string | undefined,
-    buy : (id : {id : string},products : any )=> void
+    buy : (id : {id : string},products : any )=> void,
+    RemoveProduct : (id : {id : string})=> void
+
 }
 
 const ContextUser = createContext<VAl | null>(null)
@@ -54,13 +56,18 @@ export function Contex({children} : Child){
         router.push("/dashboard/users")
     }
 
+    const RemoveProduct = (id : {id : string}) =>{
+        removeProduct(id)
+        router.push("/dashboard/products")
+    }
+
     const buy = (id : {id : string},products : any)=>{
         buyProduct(id , products)
         router.push("/")
     }
 
     return(
-        <ContextUser.Provider value={{user , handleUser ,logout , Remove , category,id,buy}}>
+        <ContextUser.Provider value={{user , handleUser ,logout , Remove , category,id,buy,RemoveProduct}}>
             {children}
         </ContextUser.Provider>
     )

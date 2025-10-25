@@ -25,7 +25,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div className=" grid grid-cols-2 mx-5 text-sm md:grid-cols-4 sm:grid-cols-3">
+    <div className=" grid grid-cols-2 px-5 sm:px-0 container mx-auto text-sm md:grid-cols-4 sm:grid-cols-3">
       {product && product.map((item: productsType) => (
         <div className="mb-5 shadow-2xl rounded-2xl p-3 ml-2" key={item.id}>
           <p className="mb-2 line-clamp-2   w-auto ">{item.producName}</p>
