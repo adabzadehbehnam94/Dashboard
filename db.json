@@ -45,7 +45,24 @@
       "password": "123456",
       "date": "9",
       "category": "admin",
-      "id": "037a"
+      "id": "037a",
+      "orders": [
+        {
+          "name": "ایسوس tuf gaming f15",
+          "price": "1500000000",
+          "id": "a23f"
+        },
+        {
+          "name": "سامسونگ galaxy s25 ultra",
+          "price": "800000000",
+          "id": "969c"
+        },
+        {
+          "name": "هدفون بلوتوثی بیتس مدل Powerbeats Pro 1",
+          "price": "150000000",
+          "id": "972m"
+        }
+      ]
     },
     {
       "name": "محسن",
@@ -54,7 +71,19 @@
       "password": "123456",
       "date": "8",
       "category": "admin",
-      "id": "3033"
+      "id": "3033",
+      "orders": [
+        {
+          "name": "هدفون بلوتوثی بیتس مدل Powerbeats Pro 1",
+          "price": "150000000",
+          "id": "972m"
+        },
+        {
+          "name": "ایسوس tuf gaming f15",
+          "price": "1500000000",
+          "id": "a23f"
+        }
+      ]
     },
     {
       "name": "رضا",

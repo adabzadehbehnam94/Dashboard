@@ -318,24 +318,26 @@ export async function buyProduct(id : {id : string},products : any) {
 
     const oldData = await oldOrders.json()
     
-    const fetchdata = await fetch(`http://localhost:3001/users/${id}`,{
+    if(oldData?.orders){
+        const fetchdata = await fetch(`http://localhost:3001/users/${id}`,{
         method : "PATCH",
         cache : "no-store",
         body : JSON.stringify({
-            orders : [...oldData.orders , ...products]
+            orders : [...oldData?.orders , ...products]
         })
     })
+}else{
 
+    const fetchdataNew = await fetch(`http://localhost:3001/users/${id}`,{
+        method : "PATCH",
+        cache : "no-store",
+        body : JSON.stringify({
+            orders : [...products]
+        })
+    })
+}
 
-    if(fetchdata.ok){
-        return {
-            buySuccess : "سفارش شما با موفقیت ثبت شد"
-        }
-    }else{
-        return{
-            buyError : "خرید شما ثبت نشد"
-        }
-    }
+    
 }
 
 export async function editProduct(state : StateProduct , formdara : Formdata):Promise<any> {

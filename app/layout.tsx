@@ -28,7 +28,9 @@ export default function RootLayout({
         <Contex>
           <body>
             <Topbar />
-            {children}
+            <div className="px-5 lg:px-20 container mx-auto ">
+              {children}
+            </div>
           </body>
         </Contex>
       </Redux>
