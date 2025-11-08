@@ -3,4 +3,4 @@
 برای ساخت پوشه node madule از کد npm install یا npm i استفاده کنید .
 برای اجرای json server از کد npx json-server db.json --port 3001 استفاده کنید .
 برای اجرای خود پروژه از کد npm run dev استفاده کنید .
-در این پروژه از فریمورک next js و لایبرری react و برای استایل دهی از tailwind و از typescript استفاده شده . برای سبد خرید از redux وبرای احراز هویت از next authentication و server action استفاده شده . در قسمت های مختلف پروژه از هوک های مهم react مانند use state و useeffect , use context hs استفاده شده .
+در این پروژه از فریمورک next js و لایبرری react و برای استایل دهی از tailwind و از typescript استفاده شده . برای سبد خرید از redux وبرای احراز هویت از next authentication و server action استفاده شده . در قسمت های مختلف پروژه از هوک های مهم react مانند use state و useeffect , use context  استفاده شده .
