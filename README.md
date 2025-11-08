@@ -1,36 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+این برنامه شامل یک سایت فروشگاهی و داشبرد ادمین می باشد . تمرکز اصلی در این برنامه بر روی داشبرد ادمین می باشد . 
+قسمت دیتابیس برنامه توسط json server طراحی شده بنابر این باید برای اجرای این برنامه به صورت لوکال از کد های زیر استفاده نمود .
+برای ساخت پوشه node madule از کد npm install یا npm i استفاده کنید .
+برای اجرای json server از کد npx json-server db.json --port 3001 استفاده کنید .
+برای اجرای خود پروژه از کد npm run dev استفاده کنید .
+در این پروژه از فریمورک next js و لایبرری react و برای استایل دهی از tailwind و از typescript استفاده شده . برای سبد خرید از redux وبرای احراز هویت از next authentication و server action استفاده شده . در قسمت های مختلف پروژه از هوک های مهم react مانند use state و useeffect , use context hs استفاده شده .
