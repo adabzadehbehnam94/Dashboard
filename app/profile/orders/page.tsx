@@ -16,12 +16,18 @@ export default function Orders(){
     },[])
     return(
         <div>
-            {user?.orders.map((item : any)=>(
+            {user?.orders ? 
+                (user?.orders.map((item : any)=>(
                 <div key={item.id}>
                     <p>{item.name}</p>
                     <p>{item.price}</p>
                 </div>
-            ))}
+            ))) 
+
+            : 
+            <h4>محصولی خریداری نشده</h4>
+            
+            }
         </div>
     )
 }
