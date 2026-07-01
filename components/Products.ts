@@ -1,10 +1,10 @@
 
 export interface productsType {
-    id : string ,
+    id ? : string | number ,
     producName : string,
-    price : string,
-    // image? : any,
-    category? : string,
+    price : string | Number | BigInt,
+    image? : any,
+    categoryId? : number,
     detail ? : string
 }
 

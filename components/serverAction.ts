@@ -2,7 +2,11 @@
 
 import { cookies } from "next/headers"
 import { productsType } from "./Products"
-
+import { prisma } from "@/lib/prisma"
+import cloudinary from "@/lib/cloudinary"
+import { resolve } from "path"
+import { rejects } from "assert"
+import { error } from "console"
 
 interface State {
     name?: string,
@@ -13,18 +17,26 @@ interface State {
     error?: string | undefined
 }
 
-interface StateProduct{
-    producName : string,
-    price : string,
-    detail : string,
-    id? : string
+interface StateProduct {
+    producName: string,
+    price: string,
+    detail: string,
+    id?: string
 }
 
+interface StateSetting {
+    webName?: string,
+    logo?: string,
+    detail?: string,
+    id?: number
+    success?: string,
+    error?: string
+}
 
 interface Data {
-    name: string,
-    family: string,
-    email: string,
+    firstName: string,
+    lastName?: string,
+    email?: string,
     password: string | number
 }
 
@@ -34,13 +46,18 @@ interface Formdata {
     get: (item: string) => any
 }
 
+interface PromisEditSetting {
+    success?: string,
+    error?: string,
+    logoErr?: string,
+    webNameErr?: string
+}
+
 export async function registerAction(state: State, formdata: Formdata): Promise<any> {
     const name = formdata.get("name")
     const family = formdata.get("family")
     const email = formdata.get("email")
     const password = formdata.get("password")
-    const date = formdata.get("date")
-    const category = formdata.get("category")
 
     if (name === "") {
         return {
@@ -63,23 +80,18 @@ export async function registerAction(state: State, formdata: Formdata): Promise<
         }
     }
 
-    const data = await fetch("http://localhost:3001/users", {
-        method: "POST",
-        headers: {
-            "content-type": "application/json"
-        },
-        body: JSON.stringify({
-            date: date,
-            name: name,
-            family: family,
-            email: email,
-            password: password,
-            category : category
-        })
-    })
-    const result = await data.json()
 
-    if (data.ok) {
+    const data = await prisma.users.create({
+        data: {
+            firstName: name,
+            lastName: family,
+            email: email,
+            password: password
+        },
+    });
+
+
+    if (data) {
         return {
             success: "ثبت نام شما با موفقیت انجام شد"
         }
@@ -88,6 +100,7 @@ export async function registerAction(state: State, formdata: Formdata): Promise<
             error: "ثبت نام انجام نشد"
         }
     }
+
 }
 
 export async function login(state: State, formdata: Formdata): Promise<any> {
@@ -105,31 +118,28 @@ export async function login(state: State, formdata: Formdata): Promise<any> {
         }
     }
 
-    const fetchdata = await fetch("http://localhost:3001/users", {
-        method: "GET",
-        headers: { "content-type": "application/json" },
-        cache: "no-store"
-    })
-    const data = await fetchdata.json()
-    const cookie = await cookies()
-    if (fetchdata.ok) {
 
-        const matcher = data.find((item: Data) => item.email === email)
+    const fetchdata = await prisma.users.findMany()
+
+    const cookie: { set: any } = await cookies()
+    if (fetchdata) {
+
+        const matcher = fetchdata.find((item: Data) => item.email === email)
         if (matcher) {
-            
+
             if (matcher.password === password) {
-                cookie.set("name", matcher.name)
-                cookie.set("category", matcher.category)
+                cookie.set("name", matcher.firstName)
+                // cookie.set("category", matcher.category)
                 cookie.set({
-                    name : "user",
-                    value : matcher.id,
-                    httpOnly : true
+                    name: "user",
+                    value: matcher.id,
+                    httpOnly: true
                 })
 
-                
+
                 return {
-                    user : matcher.name,
-                    logSuccess: `خوش آمدید ${matcher.name}`
+                    user: matcher.firstName,
+                    logSuccess: `خوش آمدید ${matcher.firstName}`
                 }
             } else {
                 return {
@@ -149,18 +159,18 @@ export async function login(state: State, formdata: Formdata): Promise<any> {
     }
 }
 
-export const presentUser = async (): Promise<{ user?: string, category?: any, cookieError? : string, id? : string}> => {
+export const presentUser = async (): Promise<{ user?: string, category?: any, cookieError?: string, id?: string }> => {
     const cookie = await cookies()
     const name = cookie.get("name")
-    const category = cookie.get("category")
-    const user : any = cookie.get("user")
-    
-    
-    if (name && category) {
+    // const category = cookie.get("category")
+    const user: any = cookie.get("user")
+
+
+    if (name) {
         return {
             user: name.value,
-            category: category.value,
-            id : user.value
+            // category: category.value,
+            id: user.value
         }
     } else {
         return {
@@ -179,8 +189,8 @@ export const logoutUser = async () => {
 
 export async function productAction(state: productsType, formdata: Formdata): Promise<any> {
     const producName = formdata.get("producName")
-    const price = formdata.get("price")
-    // const image = formdata.get("image")
+    const price = parseInt(formdata.get("price"))
+    const image = formdata.get("image") as File
     const category = formdata.get("category")
     const Description = formdata.get("Description")
 
@@ -189,44 +199,58 @@ export async function productAction(state: productsType, formdata: Formdata): Pr
             nameErr: "فیلد نام اجباریست"
         }
     }
-    if (price === "") {
+    if (price === 0) {
         return {
             priceErr: "فیلد قیمت اجباریست"
         }
     }
-    // if (image === null) {
-    //     return {
-    //         imageErr: "فیلد عکس اجباریست"
-    //     }
-    // }
+
     if (category === null) {
         return {
             categoryErr: "فیلد دسته بندی اجباریست"
         }
     }
-    // const form = new FormData()
-    // form.append("image" , image)
-    // form.append("producName" , producName)
-    // form.append("price" , price)
-    // form.append("category" , category)
 
-    const data = await fetch("http://localhost:3001/products", {
-        method: "POST",
-        cache: "no-store",
-        body: JSON.stringify({
+    const bytes = await image.arrayBuffer()
+    const buffer = Buffer.from(bytes)
+
+    const uploadImage: any =
+        await new Promise(
+            (resolve, reject) => {
+
+                const stream =
+                    cloudinary.uploader.upload_stream(
+                        {
+                            folder:
+                                "products",
+                        },
+
+                        (error, result) => {
+
+                            if (error)
+                                reject(error);
+
+                            else
+                                resolve(result);
+                        }
+                    );
+
+                stream.end(buffer);
+            }
+        );
+
+    const result = await prisma.products.create({
+        data: {
             producName: producName,
             price: price,
-            // image : image,
-            category: category,
-            Description: Description
-        })
-        // body : form
+            detail: Description,
+            categoryId: Number(category),
+            image: uploadImage.secure_url
+        },
+    });
 
-    })
-    const result = await data.json()
-    
 
-    if (data.ok) {
+    if (result) {
         return {
             success: " محصول  با موفقیت ثبت شد"
         }
@@ -237,31 +261,18 @@ export async function productAction(state: productsType, formdata: Formdata): Pr
     }
 }
 
-export const removeUser = async (id: { id: string }) => {
-    const data = await fetch(`http://localhost:3001/users/${id}`, {
-        method: "DELETE",
-        cache: "no-store"
-    })
-
-    if (data.ok) {
-        return {
-            removeSuccess: "کاربر حذف شد"
-        }
-    } else {
-        return {
-            removeError: "حذف کاربر انجام نشد"
-        }
-    }
+export const removeUser = async (id: number | undefined) => {
+    const data = await prisma.users.delete({ where: { id: id } })
 }
 
-export async function editUser(state: State, formdata: Formdata):Promise<any> {
+export async function editUser(state: State, formdata: Formdata): Promise<any> {
     const name = formdata.get("name")
     const family = formdata.get("family")
     const email = formdata.get("email")
     const password = formdata.get("password")
-    const date = formdata.get("date")
+    // const date = formdata.get("date")
     const id = formdata.get("id")
-    const category = formdata.get("category")
+    // const category = formdata.get("category")
 
     if (name === "") {
         return {
@@ -283,112 +294,266 @@ export async function editUser(state: State, formdata: Formdata):Promise<any> {
             passwordErr: "فیلد رمز عبور نباید خالی باشد"
         }
     }
-    const data = await fetch(`http://localhost:3001/users/${id}`, {
-        method: "PUT",
-        cache: "no-store",
-        body : JSON.stringify({
-            name : name,
-            family : family,
-            email : email ,
-            password : password,
-            date : date,
-            category : category
-        })
+
+
+    const result = await prisma.users.update({
+        where: { id: Number(id) },
+        data: {
+            firstName: name,
+            lastName: family,
+            email: email,
+            password: password
+        }
     })
 
-     const result = await data.json()
-     
-     if(data.ok){
+    if (result) {
         return {
-            editSuccess : "تغییرات با موفقیت اعمال شد"
+            editSuccess: "تغییرات با موفقیت اعمال شد"
         }
-     }else{
+    } else {
         return {
-            editError : "تغییرات انجام نشد"
+            editError: "تغییرات انجام نشد"
         }
-     }
+    }
 }
 
 
-export async function buyProduct(id : {id : string},products : any) {
-    const oldOrders = await fetch(`http://localhost:3001/users/${id}`,{
-        method : "GET",
-        cache : "no-store"
+export async function buyProduct(id: { id: string }, products: any) {
+    const oldOrders = await fetch(`http://localhost:3001/users/${id}`, {
+        method: "GET",
+        cache: "no-store"
     })
 
     const oldData = await oldOrders.json()
-    
-    if(oldData?.orders){
-        const fetchdata = await fetch(`http://localhost:3001/users/${id}`,{
-        method : "PATCH",
-        cache : "no-store",
-        body : JSON.stringify({
-            orders : [...oldData?.orders , ...products]
-        })
-    })
-}else{
 
-    const fetchdataNew = await fetch(`http://localhost:3001/users/${id}`,{
-        method : "PATCH",
-        cache : "no-store",
-        body : JSON.stringify({
-            orders : [...products]
+    if (oldData?.orders) {
+        const fetchdata = await fetch(`http://localhost:3001/users/${id}`, {
+            method: "PATCH",
+            cache: "no-store",
+            body: JSON.stringify({
+                orders: [...oldData?.orders, ...products]
+            })
         })
-    })
+    } else {
+
+        const fetchdataNew = await fetch(`http://localhost:3001/users/${id}`, {
+            method: "PATCH",
+            cache: "no-store",
+            body: JSON.stringify({
+                orders: [...products]
+            })
+        })
+    }
+
+
 }
 
-    
-}
-
-export async function editProduct(state : StateProduct , formdara : Formdata):Promise<any> {
-    const producName = formdara.get("producName")
-    const price = formdara.get("price")
-    const detail = formdara.get("detail")
-    const id = formdara.get("id")
-    const category = formdara.get("category")
+export async function editProduct(state: StateProduct, formdata: Formdata): Promise<any> {
+    const producName = formdata.get("producName")
+    const price = Number(formdata.get("price"))
+    const detail = formdata.get("detail")
+    const id = Number(formdata.get("id"))
+    const category = Number(formdata.get("category"))
+    const image = formdata.get("image")
 
     if (producName === "") {
         return {
             nameErr: "فیلد نام محصول نباید خالی باشد"
         }
     }
-    if (price === "") {
+    if (price === 0) {
         return {
-            familyErr: "فیلد قیمت نباید خالی باشد"
+            priceErr: "فیلد قیمت نباید خالی یا صفر باشد"
         }
     }
-    
 
-    const fetchData = await fetch(`http://localhost:3001/products/${id}`,{
-        method : "PUT",
-        cache : "no-store",
-        body : JSON.stringify({
-            producName : producName,
-            price : price,
-            detail : detail,
-            category : category,
-            id:id
-        })
+    let imageUrl
+
+
+
+    if (image instanceof File && image.size > 0) {
+        const byte = await image.arrayBuffer()
+        const buffer = Buffer.from(byte)
+        const uploadImage: any = await new Promise(
+            (resolve, reject) => {
+                const stream = cloudinary.uploader.upload_stream(
+                    { folder: "product" },
+                    (error, result) => {
+                        if (error) reject(error)
+                        else resolve(result)
+                    }
+                )
+
+                stream.end(buffer)
+            }
+        )
+
+        imageUrl = uploadImage.secure_url
+    } else {
+        imageUrl = formdata.get("oldImage")
+    }
+
+    const fetchData = await prisma.products.update({
+        where: { id: id },
+        data: {
+            producName: producName,
+            price: price,
+            detail: detail,
+            categoryId: category,
+            image: imageUrl
+        }
     })
 
 
-    if(fetchData.ok){
-        return{
-            success : "ویرایش با موفقیت انجام شد"
-        }
-    }else{
+    if (fetchData) {
         return {
-            error : "ویرایش انجام نشد"
+            success: "ویرایش با موفقیت انجام شد"
+        }
+    } else {
+        return {
+            error: "ویرایش انجام نشد"
         }
     }
 }
 
-export async function removeProduct(id : {id : string}) {
-    const fetchdata = await fetch(`http://localhost:3001/products/${id}`,{
-        method : "DELETE",
-        cache : "no-store"
+export async function removeProduct(id: number | undefined) {
+    const fetchdata = await prisma.products.delete({ where: { id: id } })
+
+    if (fetchdata) {
+        return {
+            success: "محصول با موفقیت حذف شد"
+        }
+    } else {
+        return {
+            error: "محصول حذف نشد"
+        }
+    }
+
+}
+
+export async function allUsers() {
+    const data = await prisma.users.findMany()
+    return data.length
+}
+
+export async function allProducts() {
+    const data = await prisma.products.findMany()
+    return data.length
+}
+
+export async function allCategories() {
+    const data = await prisma.categories.findMany()
+    return data
+}
+
+
+export async function categoryAction(state: any, formdata: any): Promise<any> {
+    const name = formdata.get("name")
+
+    const data = await prisma.categories.create({
+        data: {
+            name: name
+        }
+    })
+}
+
+export async function categoryEditAction(state: any, formdata: any): Promise<any> {
+    const name = formdata.get("name")
+    const id = formdata.get("id")
+
+    const data = await prisma.categories.update({
+        where: { id: Number(id) },
+        data: {
+            name: name
+        }
     })
 
+    if (data) {
+        return {
+            success: "ویرایش با موفقیت ثبت شد"
+        }
+    } else {
+        return {
+            error: "ویرایش انجام نشد"
+        }
+    }
+}
+
+export async function categoryDeleteAction(id: number) {
+
+    const data = await prisma.categories.delete({
+        where: { id: Number(id) }
+    })
+}
+
+export async function editWebSetting(state: StateSetting, formdata: Formdata): Promise<PromisEditSetting> {
+    const id = formdata.get("id")
+    const logo = formdata.get("logo")
+    const webName = formdata.get("webName")
+    const detail = formdata.get("detail")
+
+    if (logo === null) {
+        return {
+            logoErr: "لوگو نباید خالی باشد"
+        }
+    }
+
+    if (webName === "") {
+        return {
+            webNameErr: "نام شرکت نباید خالی باشد"
+        }
+    }
+
+    let logoUrl
+
+    if (logo instanceof File && logo.size > 0) {
+        const bytes = await logo.arrayBuffer()
+        const buffer = Buffer.from(bytes)
+
+        const uploadImage: any = await new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+                { folder: "logo" },
+                (error, result) => {
+                    if (error) reject(error)
+                    else resolve(result)
+                }
+            )
+
+            stream.end(buffer)
+
+        })
+
+        logoUrl = uploadImage.secure_url
+    } else {
+        logoUrl = formdata.get("oldLogo")
+    }
+
+    // console.log(typeof(logo));
+
+
+    const data = await prisma.settings.update({
+        where: { userId: Number(id) },
+        data: {
+            logo: logoUrl,
+            webName: webName,
+            detail: detail
+        }
+    })
+
+    if (data) {
+        return {
+            success: "ویرایش با موفقیت ثبت شد"
+        }
+    } else {
+        return {
+            error: "ویرایش انجام نشد"
+        }
+    }
+}
+
+export async function presentSetting(id: number) {
+    const data = await prisma.settings.findUnique({ where: { userId: id } })
+    return data
 }
 
 

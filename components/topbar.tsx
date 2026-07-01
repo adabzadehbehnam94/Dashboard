@@ -17,7 +17,7 @@ import SidebarProfile from "./sidebarProfile"
 
 
 export default function Topbar() {
-    const { user, logout, category } = useContext<VAl | any>(ContextUser)
+    const { web,user, logout, category } = useContext<VAl | any>(ContextUser)
     const selector = useSelector((state: { card: any }) => state.card)
     const [menuMobile, setmenuMobile] = useState(menu)
     const [open, setopen] = useState(false)
@@ -42,13 +42,15 @@ export default function Topbar() {
                     <header className="bg-blue-500 px-5 md:px-10 lg:px-20 h-20 flex text-white items-center mb-5">
                         <div className="flex h-10 items-center">
                             <button onClick={mobile} className="sm:hidden ml-10"><Image alt="menu" width={30} height={30} src={menuMobile} /></button>
-                            <Link className="ml-10 hidden sm:flex" href={category === "admin" ? "/dashboard/overview" : "/profile"}>{user}</Link>
+                            <Link className="ml-10 hidden sm:flex" href={"/dashboard/overview"}>{user}</Link>
                             <button type="button" className="cursor-pointer ml-10 hidden sm:flex" onClick={logout}>خروج</button>
                             <div className="relative">
                                 <Link href={"/card"}><Image alt="card" src={cart} width={30} height={30} /></Link>
                                 {selector.count > 0 && <p className="absolute -bottom-1  -left-2 bg-red-500 rounded-2xl px-2 text-sm">{selector.count.toLocaleString("fa-IR")}</p>}
                             </div>
                         </div>
+                        {/* <div>{web?.webName}</div> */}
+                        {web?.logo && <Image src={web.logo} alt="logo" width={40} height={40}/>}
                     </header>
                     {open &&
                         <div className={`bg-blue-500 h-150 absolute ${open} right-0 top-20 w-50 pt-10 pr-5`}>

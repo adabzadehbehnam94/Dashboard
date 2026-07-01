@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import localFont from 'next/font/local'
-import "../styles/globals.css"
+import localFont from 'next/font/local';
+import "@/styles/globals.css";
 import Topbar from "@/components/topbar";
 import { Contex } from "@/components/Contex";
 import { Redux } from "@/components/Redux";
@@ -28,7 +28,7 @@ export default function RootLayout({
         <Contex>
           <body>
             <Topbar />
-            <div className="px-5 lg:px-20 container mx-auto ">
+            <div className="container mx-auto px-6 sm:10 md:px-20">
               {children}
             </div>
           </body>
