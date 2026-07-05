@@ -41,17 +41,20 @@ export default function ImportProduct() {
         fetchData()
       },[])
     return (
-        <div >
+        <div className="w-60 sm:w-auto">
 
             <form className=" sm:mr-5" action={formProduct}>
                 <label >نام محصول :</label>
-                <input name="producName" className="border-2 border-gray-300 rounded-md px-2 py-1 mt-2 mb-2" type="text" />
+                <input name="producName" className="border-2 border-gray-300 rounded-md px-2 py-1 mt-2 mb-2  mr-2" type="text" />
                 <br />
                 <label >قیمت محصول :</label>
-                <input className={`${IransansFaNumber.className} border-2 border-gray-300 rounded-md px-2 py-1 mt-2 mb-2`} name="price" type="number" />
+                <input className={`${IransansFaNumber.className} border-2 border-gray-300 rounded-md px-2 py-1 mt-2 mb-2 mr-2`} name="price" type="number" />
                 <br />
-                 <label >تصویر محصول :</label>
-                <input className={`border-2 border-gray-300 rounded-md px-2 py-1 mt-2 mb-2`} name="image" type="file" />
+                <div className="flex flex-col md:flex-row">
+
+                <label >تصویر محصول :</label>
+                <input className={`border-2 border-gray-300 rounded-md px-2 py-1 mt-2 mb-2 md:mr-2`} name="image" type="file" />
+                </div>
                 <br/>
                 <label>شرح محصول :</label>
                 <br/>
@@ -59,9 +62,7 @@ export default function ImportProduct() {
                 <br />
                 <label >دسته بندی : </label>
                 <select className=" cursor-pointer bg-blue-500 text-white pr-2 py-1 rounded-md" name="category" id="1">
-                    {/* <option value={2} key="1">موبایل</option>
-                    <option value={1} key="2">لپتاپ</option>
-                    <option value={3} key="3">لوازم جانبی</option> */}
+                   
                     {category?.map((item : any)=>(
                       <option value={item.id} key={item.id}>{item.name}</option>
                     ))}

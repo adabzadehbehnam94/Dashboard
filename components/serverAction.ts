@@ -25,12 +25,19 @@ interface StateProduct {
 }
 
 interface StateSetting {
-    webName?: string,
+    webName?: string | undefined,
     logo?: string,
     detail?: string,
     id?: number
     success?: string,
-    error?: string
+    error?: string,
+    address?: string,
+    mobile?: number,
+    email?: string,
+    errName?: string,
+    errLogo?: string,
+    errAddress?: string,
+    errMobile?: string,
 }
 
 interface Data {
@@ -50,6 +57,7 @@ interface PromisEditSetting {
     success?: string,
     error?: string,
     logoErr?: string,
+    errMobile? : string
     webNameErr?: string
 }
 
@@ -486,11 +494,95 @@ export async function categoryDeleteAction(id: number) {
     })
 }
 
+export async function importWebDetail(state: StateSetting, formdata: Formdata) {
+    const name = formdata.get("name")
+    const detail = formdata.get("detail")
+    const logo = formdata.get("logo")
+    const address = formdata.get("address")
+    const mobile = formdata.get("mobile")
+    const email = formdata.get("email")
+
+    if (name === "") {
+        return {
+            ...state,
+            errName: "نام شرکت نباید خالی باشد"
+        }
+    }
+    if (logo === null) {
+        return {
+            ...state,
+            errLogo: "لطفا لوگو شرکت را وارد کنید",
+        }
+    }
+    if (address === "") {
+        return {
+            ...state,
+            errAddress: "فیلد آدرس نباید خالی باشد",
+        }
+    }
+
+    if (mobile === "") {
+        return {
+            ...state,
+            errMobile: "فیلد شماره موبایل نباید خالی باشد"
+        }
+    }
+
+    
+
+    const byte = await logo.arrayBuffer()
+    const buffer = Buffer.from(byte)
+
+    const uploadLogo : any = await new Promise((resolve , reject)=>{
+        const stream = cloudinary.uploader.upload_stream(
+            {folder : "logo"},
+            (error , result)=>{
+                if(error) reject(error)
+                    else resolve(result)
+            }
+        )
+        stream.end(buffer)
+    })
+
+
+    const cookie = await cookies()
+    const userId = cookie.get("user")?.value
+
+
+    const dataSetting = await prisma.settings.create({
+        data: {
+            webName: name,
+            detail: detail,
+            logo: uploadLogo.secure_url,
+            email: email,
+            address: address,
+            mobile: mobile,
+            userId: Number(userId)
+        }
+    })
+
+    if (dataSetting) {
+        return {
+            ...state,
+            success: "اطلاعت سایت با موفقیت ثبت شد"
+        }
+    } else {
+        return {
+            ...state,
+            error: "ثبت اطلاعات انجام نشد"
+        }
+    }
+
+}
+
 export async function editWebSetting(state: StateSetting, formdata: Formdata): Promise<PromisEditSetting> {
     const id = formdata.get("id")
     const logo = formdata.get("logo")
     const webName = formdata.get("webName")
     const detail = formdata.get("detail")
+    const address = formdata.get("address")
+    const mobile = formdata.get("mobile")
+    const email = formdata.get("email")
 
     if (logo === null) {
         return {
@@ -501,6 +593,12 @@ export async function editWebSetting(state: StateSetting, formdata: Formdata): P
     if (webName === "") {
         return {
             webNameErr: "نام شرکت نباید خالی باشد"
+        }
+    }
+
+    if (mobile === "") {
+        return {
+            errMobile: "فیلد شماره موبایل نباید خالی باشد"
         }
     }
 
@@ -528,15 +626,16 @@ export async function editWebSetting(state: StateSetting, formdata: Formdata): P
         logoUrl = formdata.get("oldLogo")
     }
 
-    // console.log(typeof(logo));
-
 
     const data = await prisma.settings.update({
         where: { userId: Number(id) },
         data: {
             logo: logoUrl,
             webName: webName,
-            detail: detail
+            detail: detail,
+            mobile : mobile,
+            email : email,
+            address : address
         }
     })
 

@@ -30,14 +30,17 @@ export default  function Categories() {
         <div>
             {data ?
                 data.map((item: { name: string, id: number }) => (
-                    <div className="flex mb-5" key={item.id}>
+                    <div className="flex mb-5 justify-between border-b-2 border-gray-300 pb-3 px-2 md:w-100" key={item.id}>
                         <div className="ml-3">{item.name}</div>
-                        <button className="text-white cursor-pointer rounded-md bg-blue-500 hover:bg-blue-300 px-2 py-1 ml-2" onClick={()=> router.push(`/dashboard/categories/${item.id}`)}>ویرایش</button>
-                        <button className="text-white cursor-pointer rounded-md bg-blue-500 hover:bg-blue-300 px-2 py-1 ml-2" onClick={()=> Delete(item.id)}>حذف</button>
+                        <div>
+
+                        <button className="text-white cursor-pointer rounded-md bg-blue-500 hover:bg-blue-300 px-2 py-1 ml-5" onClick={()=> router.push(`/dashboard/categories/${item.id}`)}>ویرایش</button>
+                        <button className="text-white cursor-pointer rounded-md bg-blue-500 hover:bg-blue-300 px-2 py-1 ml-5" onClick={()=> Delete(item.id)}>حذف</button>
+                        </div>
                     </div>
                 ))
                 :
-                <p>دسته بندی وجود ندارد</p>
+                <p className="text-center">دسته بندی وجود ندارد</p>
             }
 
             <br />

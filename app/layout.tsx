@@ -28,7 +28,7 @@ export default function RootLayout({
         <Contex>
           <body>
             <Topbar />
-            <div className="container mx-auto px-6 sm:10 md:px-20">
+            <div className="container mx-auto px-6 md:px-7 lg:px-20 ">
               {children}
             </div>
           </body>

@@ -43,21 +43,21 @@ export default function ProfileSetting({admin} : Admin){
         })
     return(
         <>
-            <h3>تنظیمات پروفایل</h3>
-                <form  action={profileAction}>
+            <h3 className="mb-5" >تنظیمات پروفایل</h3>
+                <form className="flex flex-col gap-2 "  action={profileAction}>
                     <input type="hidden" defaultValue={admin.id} name="id"/>
-                    <label>نام</label>
-                    <input type="text" defaultValue={admin.firstName} name="firstName"/>
+                    <label>نام : </label>
+                    <input className="border-2 border-gray-300 rounded-md px-2 py-1" type="text" defaultValue={admin.firstName} name="firstName"/>
                     <br />
-                    <label >نام خانوادگی</label>
-                    <input type="text" defaultValue={admin.lastName} name="lastName"/>
+                    <label >نام خانوادگی : </label>
+                    <input className="border-2 border-gray-300 rounded-md px-2 py-1" type="text" defaultValue={admin.lastName} name="lastName"/>
                     <br />
-                    <label >ایمیل</label>
-                    <input type="text" defaultValue={admin.email} name="email"/>
+                    <label >ایمیل : </label>
+                    <input className="border-2 border-gray-300 rounded-md px-2 py-1" type="text" defaultValue={admin.email} name="email"/>
                     <br />
-                    <label >رمز عبور</label>
-                    <input type="password" defaultValue={admin.password} name="password"/>
-                    <button type="submit">ثبت ویرایش</button>
+                    <label >رمز عبور : </label>
+                    <input className="border-2 border-gray-300 rounded-md px-2 py-1" type="password" defaultValue={admin.password} name="password"/>
+                    <button className="bg-blue-500 rounded-md text-white w-30 cursor-pointer py-1 mt-2" type="submit">ثبت ویرایش</button>
                 </form>
                 <ToastContainer/>
         </>

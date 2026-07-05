@@ -39,23 +39,25 @@ export default function Topbar() {
         <>
             {user ? (
                 <>
-                    <header className="bg-blue-500 px-5 md:px-10 lg:px-20 h-20 flex text-white items-center mb-5">
+                    <header className="bg-blue-500 px-5 md:px-10 lg:px-20 h-20 flex text-white items-center mb-5 justify-between">
                         <div className="flex h-10 items-center">
                             <button onClick={mobile} className="sm:hidden ml-10"><Image alt="menu" width={30} height={30} src={menuMobile} /></button>
                             <Link className="ml-10 hidden sm:flex" href={"/dashboard/overview"}>{user}</Link>
                             <button type="button" className="cursor-pointer ml-10 hidden sm:flex" onClick={logout}>خروج</button>
-                            <div className="relative">
+                            {/* <div className="relative">
                                 <Link href={"/card"}><Image alt="card" src={cart} width={30} height={30} /></Link>
                                 {selector.count > 0 && <p className="absolute -bottom-1  -left-2 bg-red-500 rounded-2xl px-2 text-sm">{selector.count.toLocaleString("fa-IR")}</p>}
-                            </div>
+                            </div> */}
                         </div>
                         {/* <div>{web?.webName}</div> */}
-                        {web?.logo && <Image src={web.logo} alt="logo" width={40} height={40}/>}
+                        <div>
+                            {web?.logo && <Image className="w-auto h-auto" src={web.logo} alt="logo" width={50} height={50}/>}
+                        </div>
                     </header>
                     {open &&
                         <div className={`bg-blue-500 h-150 absolute ${open} right-0 top-20 w-50 pt-10 pr-5`}>
-                            <Link onClick={Out} className=" mb-5 block text-white flex flex-row" href={category === "admin" ? "/dashboard/overview" : "/profile"}><Image className="ml-5" src={User} alt="user" width={20} height={20}/>{user}</Link>
-                            {category === "admin" ? <Sidebar click={Out}/> : <SidebarProfile/>}
+                            <Link onClick={Out} className=" mb-5 block text-white flex flex-row" href={"/dashboard/overview"}><Image className="ml-5" src={User} alt="user" width={20} height={20}/>{user}</Link>
+                            <Sidebar click={Out}/> 
                             <button  type="button" className=" mb-5 text-white flex flex-row" onClick={logOut}> <Image className="ml-5" src={Exit} alt="user" width={20} height={20}/>خروج</button>
                         </div>
                     }

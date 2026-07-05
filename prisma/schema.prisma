@@ -44,5 +44,8 @@ model settings {
   webName String
   detail String
   logo String
+  address String
+  mobile String
+  email String
   user users @relation(fields : [userId] , references : [id])
 }

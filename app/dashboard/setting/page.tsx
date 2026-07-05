@@ -5,6 +5,7 @@ import { ParamsId } from "../products/[id]/page";
 import { cookies } from "next/headers";
 import { useContext } from "react";
 import ContextUser, { VAl } from "@/components/Contex";
+import Link from "next/link";
 
 interface ParamsSetting{
     params:Promise<{
@@ -25,12 +26,12 @@ export default async function Setting() {
     
     
     return (
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
                 <ProfileSetting admin={userProfile!}/>
             </div>
             <div>
-                <WebSetting webDetail={web!} />
+                {web ? <WebSetting webDetail={web!} /> : <Link href={"/dashboard/setting/importWebSetting"}>تنظیمات سایت</Link>}
             </div>
         </div>
     )

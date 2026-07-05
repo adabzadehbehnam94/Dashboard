@@ -38,16 +38,16 @@ export default  function Overview() {
                 data()
         },[])
 
-        // console.log(orders);
+    
         
 
     // const data  = [{name : "فروردین" , count : 5}, {name : "اردیبهشت" , count : 2},{name : "خرداد" , count : 10}]
 
     return (
         <div className="grid md:grid-cols-3">
-                        <p>تعداد کاربران : {parseInt(user).toLocaleString("fa-IR")}</p>
-                        <p>تعداد محصولات : {parseInt(product).toLocaleString("fa-IR")}</p>
-                        <p> دسته بندی ها : {parseInt(categories?.length).toLocaleString("fa-IR")}</p>
+                        <p className="border-b-2 py-3 md:py-0 border-gray-300 md:border-none text-gray-">تعداد کاربران : {parseInt(user).toLocaleString("fa-IR")}</p>
+                        <p className="border-b-2 py-3 md:py-0 border-gray-300 md:border-none text-gray-">تعداد محصولات : {parseInt(product).toLocaleString("fa-IR")}</p>
+                        <p className="border-b-2 py-3 md:py-0 border-gray-300 md:border-none text-gray-"> دسته بندی ها : {parseInt(categories?.length).toLocaleString("fa-IR")}</p>
                         {/* <LineChart width={300} height={200} data={data}>
                             <CartesianGrid />
                             <Line dataKey="count" />
