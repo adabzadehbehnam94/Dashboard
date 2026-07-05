@@ -35,26 +35,26 @@ export default function Register() {
     return (
         <div className="mx-auto">
 
-            <form className="flex  flex-col mx-auto w-80 md:w-100 bg-white rounded-xl p-10" action={formRegister}>
+            <form className="flex  flex-col mx-auto w-80 md:w-100 bg-white rounded-xl p-10 gap-3" action={formRegister}>
                 
                 <label className="mb-1">نام : </label>
                 <input type="text" className="border-2 border-gray-300 rounded-xl px-3 py-2" name="name" />
                 
-                <br />
+                
                 <label className="mb-1">نام خانوادگی : </label>
                 <input className="border-2 border-gray-300 rounded-xl px-3 py-2" type="text" name="family" />
                 
-                <br />
+                
                 <label className="mb-1">ایمیل: </label>
                 <input className="border-2 border-gray-300 rounded-xl px-3 py-2" type="text" name="email" />
                 
-                <br />
+                
                 <label className="mb-1">رمز عبور : </label>
                 <input className="border-2 border-gray-300 rounded-xl px-3 py-2" type="password" name="password" />
                 
-                <br/>
+                
                 <button className="cursor-pointer bg-blue-500 px-1 py-1 text-white rounded-xl w-20 justify-center" type="submit">ثبت نام</button>
-                <br />
+                
                 
             </form>
             <ToastContainer/>

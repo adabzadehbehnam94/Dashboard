@@ -52,7 +52,7 @@ export default function UsersDetails({ users }: Userdata) {
                 </div>
                 <div className="order-first sm:order-last mb-5">
                     <label>جست و جو : </label>
-                    <input onChange={(item) => setsearch(item.target.value)} className="border-2 border-gray-300 px-2 py-1 rounded-md" type="search" name="search" placeholder="نام کاربر" />
+                    <input onChange={(item) => setsearch(item.target.value)} className="border-2 border-gray-300 px-2 py-1 rounded-md mt-3" type="search" name="search" placeholder="نام کاربر" />
                 </div>
             </div>
         </>

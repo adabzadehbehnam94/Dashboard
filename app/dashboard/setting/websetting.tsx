@@ -24,9 +24,23 @@ export default function WebSetting({ webDetail }: Web) {
     useEffect(() => {
         if (state?.success) {
             toast.success(state.success)
-        } else {
+        }
+        if(state?.errAddress){
+            toast.error(state.errAddress)
+        }
+        if(state?.errMobile){
+            toast.error(state.errMobile)
+        }
+        if(state?.webNameErr){
+            toast.error(state.webNameErr)
+        }
+        if(state?.errAddress){
             toast.error(state.error)
         }
+        if(state?.errAddress){
+            toast.error(state.error)
+        }
+        
     }, [state])
 
 
@@ -52,7 +66,7 @@ export default function WebSetting({ webDetail }: Web) {
 
                 <div className="flex flex-col xl:flex-row gap-2">
                     <label>لوگو : </label>
-                    <Image className="w-auto h-auto" src={webDetail.logo} width={50} height={50} alt="logo" />
+                    <Image className="w-40 h-40 lg:w-auto lg:h-auto" src={webDetail.logo} width={50} height={50} alt="logo" />
                     <input className="rounded-md border-gray-300 border-2 px-2 py-1 cursor-pointer" name="logo" type="file" />
                 </div>
                 <label > آدرس ایمیل شرکت : </label>

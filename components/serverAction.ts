@@ -57,8 +57,9 @@ interface PromisEditSetting {
     success?: string,
     error?: string,
     logoErr?: string,
-    errMobile? : string
-    webNameErr?: string
+    errMobile? : string,
+    webNameErr?: string,
+    errAddress?: string,
 }
 
 export async function registerAction(state: State, formdata: Formdata): Promise<any> {
@@ -584,7 +585,7 @@ export async function editWebSetting(state: StateSetting, formdata: Formdata): P
     const mobile = formdata.get("mobile")
     const email = formdata.get("email")
 
-    if (logo === null) {
+    if (logo === "") {
         return {
             logoErr: "لوگو نباید خالی باشد"
         }
@@ -599,6 +600,12 @@ export async function editWebSetting(state: StateSetting, formdata: Formdata): P
     if (mobile === "") {
         return {
             errMobile: "فیلد شماره موبایل نباید خالی باشد"
+        }
+    }
+
+     if (address === "") {
+        return {
+            errAddress: "فیلد آدرس نباید خالی باشد"
         }
     }
 
